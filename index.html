@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>automaitly - automate the routine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "primary-blue": "#3b82f6",
+              "dark-blue": "#0f172a",
+              "text-dark": "#1e293b",
+              "text-medium": "#475569",
+              "text-light": "#64748b",
+              "bg-light": "#f8fafc",
+              "card-bg": "#f9fbfc",
+              "border-color": "#e2e8f0",
+              "input-border": "#cbd5e1",
+              "input-bg": "#ffffff",
+              "checkmark-color": "#22c55e",
+              "purple-new": "#8b5cf6",
+              "purple-new-text": "#f0fdf4",
+              "footer-bg": "#111827",
+              "footer-text-color": "#e5e7eb",
+              "footer-link-hover-color": "#9ca3af",
+              "hero-label-bg": "#efedf8",
+              "hero-label-text": "#5b429a",
+              "email-input-bg": "#f7fafd",
+              "email-input-border": "#e0e6ed",
+              "email-btn-bg": "#0d2540",
+            },
+            fontFamily: {
+              inter: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background-color: #ffffff;
+      }
+
+      .gradient-text {
+        background: repeating-linear-gradient(90deg, #111 0%, #a259c6 20%, #5b6df8 40%, #111 60%, #a259c6 80%, #5b6df8 100%);
+        background-size: 300% 100%;
+        background-position: 0% 0%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: gradient-shift 7s linear infinite;
+      }
+
+      @keyframes gradient-shift {
+        0% {
+          background-position: 0% 0%;
+        }
+        100% {
+          background-position: 100% 0%;
+        }
+      }
+
+      .hero-bg {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-bg canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .btn-primary-gradient {
+        background: linear-gradient(90deg, rgb(73, 5, 108) 0%, rgb(120, 60, 160) 100%);
+      }
+
+      /* Mobile Responsive Styles */
+      @media (max-width: 1024px) {
+        .hero-bg {
+          min-height: 65vh;
+        }
+
+        .tab-content {
+          flex-direction: column !important;
+        }
+
+        .tab-content > div:last-child {
+          width: 100% !important;
+          max-width: none !important;
+        }
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.5rem !important;
+        }
+
+        h2 {
+          font-size: 2rem !important;
+        }
+
+        .hero-bg {
+          padding: 40px 20px !important;
+          border-radius: 14px !important;
+        }
+
+        .email-signup-form {
+          flex-direction: column;
+        }
+
+        .footer-wrapper {
+          flex-direction: column !important;
+          text-align: center;
+        }
+
+        .footer-wrapper nav ul {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 1.75rem !important;
+        }
+
+        .hero-subtitle {
+          font-size: 1rem !important;
+        }
+
+        .tab-button {
+          font-size: 0.9375rem !important;
+          padding: 10px 18px !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="font-inter text-text-medium antialiased">
+    <!-- Header -->
+    <header class="absolute inset-x-0 top-0 z-50">
+      <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+        <!-- Logo -->
+        <div class="flex lg:flex-1">
+          <a href="#" class="-m-1.5 p-1.5 flex items-center">
+            <span class="sr-only">automaitly</span>
+            <!-- Your original SVG, now styled with brand colors -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" id="Ai-Scanner-Robot--Streamline-Flex" height="16" width="16">
+              <desc>
+                Ai Scanner Robot Streamline Icon: https://streamlinehq.com
+              </desc>
+              <g id="ai-scanner-robot--scan-scanning-artificial-intelligence-ai">
+                <path id="Union" fill="#000000" fill-rule="evenodd" d="M4.88544 0.983973c0.03976 0.412297 -0.26225 0.778767 -0.67455 0.818527 -0.65509 0.06317 -1.29832 0.14093 -1.92285 0.22294 -0.1081 0.01419 -0.19417 0.10005 -0.20792 0.2102 -0.07717 0.61827 -0.15188 1.2567 -0.21326 1.90763 -0.03889 0.41239 -0.40472 0.71516 -0.81711 0.67628 -0.41238 -0.03889 -0.715158 -0.40472 -0.676269 -0.81711 0.063385 -0.67214 0.140128 -1.32717 0.218191 -1.95258C0.68975 1.26409 1.30564 0.641569 2.09274 0.538208 2.72717 0.454895 3.38875 0.374819 4.06692 0.309424c0.4123 -0.039758 0.77876 0.262248 0.81852 0.674549ZM12.95 9.18043c0.4124 0.03889 0.7152 0.40472 0.6763 0.8171 -0.0634 0.67217 -0.1401 1.32717 -0.2182 1.95257 -0.0981 0.7858 -0.7139 1.4083 -1.501 1.5117 -0.6345 0.0833 -1.2961 0.1634 -1.97422 0.2288 -0.4123 0.0397 -0.77877 -0.2623 -0.81853 -0.6746 -0.03975 -0.4123 0.26225 -0.7788 0.67455 -0.8185 0.6551 -0.0632 1.2983 -0.141 1.9229 -0.223 0.1081 -0.0142 0.1941 -0.1 0.2079 -0.2102 0.0771 -0.6182 0.1519 -1.2567 0.2132 -1.9076 0.0389 -0.41238 0.4048 -0.71516 0.8171 -0.67627ZM9.93288 0.309424c-0.4123 -0.039758 -0.77877 0.262248 -0.81853 0.674549 -0.03975 0.412297 0.26225 0.778767 0.67455 0.818527 0.6551 0.06317 1.2983 0.14093 1.9229 0.22294 0.1081 0.01419 0.1941 0.10005 0.2079 0.2102 0.0771 0.61827 0.1519 1.2567 0.2132 1.90763 0.0389 0.41239 0.4048 0.71516 0.8171 0.67628 0.4124 -0.03889 0.7152 -0.40472 0.6763 -0.81711 -0.0634 -0.67214 -0.1401 -1.32717 -0.2182 -1.95258 -0.0981 -0.78577 -0.7139 -1.408291 -1.501 -1.511652C11.2726 0.454895 10.611 0.374819 9.93288 0.309424ZM1.04975 9.18043c0.41239 -0.03889 0.77822 0.26389 0.81711 0.67627 0.06138 0.6509 0.13609 1.2894 0.21326 1.9076 0.01375 0.1102 0.09982 0.196 0.20792 0.2102 0.62453 0.082 1.26776 0.1598 1.92285 0.223 0.4123 0.0397 0.71431 0.4062 0.67455 0.8185 -0.03976 0.4123 -0.40622 0.7143 -0.81852 0.6746 -0.67817 -0.0654 -1.33975 -0.1455 -1.97418 -0.2288 -0.7871 -0.1034 -1.40299 -0.7259 -1.501068 -1.5117 -0.078063 -0.6254 -0.154806 -1.2804 -0.218191 -1.95257 -0.038889 -0.41238 0.263889 -0.77821 0.676269 -0.8171Zm7.26278 -6.09139c0 0.54227 -0.1969 0.93139 -0.56246 1.13912l-0.00002 0.54324c0.65938 0.00775 1.32926 0.03623 1.92772 0.14087 0.58613 0.10249 1.03733 0.55577 1.16063 1.12687 0.1187 0.54951 0.1186 1.0071 0.1186 1.83917v0.06168c0 0.83208 0.0001 1.28966 -0.1186 1.83918 -0.1233 0.57113 -0.5745 1.02433 -1.16063 1.12683 -0.82233 0.1438 -1.77951 0.1438 -2.65897 0.1438h-0.03779c-0.87946 0 -1.83664 0 -2.65897 -0.1438 -0.58616 -0.1025 -1.03735 -0.5557 -1.16065 -1.12683 -0.11863 -0.54952 -0.11862 -1.00711 -0.11861 -1.83919v-0.06165c-0.00001 -0.83208 -0.00002 -1.28967 0.11861 -1.83919 0.1233 -0.5711 0.57449 -1.02438 1.16065 -1.12687 0.59855 -0.10465 1.26855 -0.13313 1.92801 -0.14087l0.00002 -0.54311c-0.36571 -0.2077 -0.56269 -0.59687 -0.56269 -1.13925 0 -0.84005 0.47252 -1.31258 1.31257 -1.31258s1.31258 0.47253 1.31258 1.31258Zm-0.50718 4.46698c0 -0.34518 0.27982 -0.625 0.625 -0.625 0.34517 0 0.625 0.27982 0.625 0.625l0 0.42638c0 0.34518 -0.27982 0.625 -0.625 0.625s-0.625 -0.27982 -0.625 -0.62499l0 -0.42639Zm-2.23682 -0.625c-0.34518 0 -0.625 0.27982 -0.625 0.625l0 0.42639c0 0.34517 0.27983 0.62499 0.625 0.62499 0.34518 0 0.625 -0.27982 0.625 -0.625l0 -0.42638c0 -0.34518 -0.27982 -0.625 -0.625 -0.625Z" clip-rule="evenodd" stroke-width="1"></path>
+              </g>
+            </svg>
+            <span class="ml-2 text-lg font-semibold text-gray-900">Automaitly</span>
+          </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="flex lg:hidden">
+          <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+            <span class="sr-only">Open main menu</span>
+            <!-- Heroicon: Bars 3 -->
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Desktop Navigation Links -->
+         <!-- Desktop Navigation Links -->
+        <div class="hidden lg:flex lg:gap-x-12">
+          <a href="#how-it-works" class="text-sm font-semibold leading-6 text-gray-900 hover:underline underline-offset-8">How it works</a>
+          <a href="#features" class="text-sm font-semibold leading-6 text-gray-900 hover:underline underline-offset-8">Features</a>
+          <a href="#use-cases" class="text-sm font-semibold leading-6 text-gray-900 hover:underline underline-offset-8">Use cases</a>
+        </div>
+
+        <!-- Desktop Login Link -->
+        <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+          <a href="#cta" class="text-sm font-semibold leading-6 text-gray-900 hover:underline underline-offset-8">Notify me</a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- OLD HERO
+     <section class="flex justify-center items-center min-h-[95vh] text-center">
+      <div class="w-[90vw] max-w-[1300px] mx-auto min-h-[40vh] flex items-center justify-center px-10 py-[72px] rounded-3xl hero-bg">
+        <canvas id="gradient-canvas"></canvas>
+        <div class="hero-content flex flex-col items-center max-w-[850px] w-full pb-14">
+          <div class="inline-flex items-center gap-2 bg-hero-label-bg text-hero-label-text px-4 py-1.5 rounded-[20px] text-[0.9375rem] font-medium mb-[30px]">
+            <i class="fas fa-code text-sm"></i>
+            <span>Under Development</span>
+          </div>
+          <h1 class="text-[4rem] leading-[1.15] text-text-dark mb-6 font-medium"><span class="gradient-text">Automate</span> the routine <br>with AI agents</br></h1>
+          <p class="text-[1.375rem] text-text-medium mb-[70px] leading-[1.6] max-w-2xl">Transform your business operations with intelligent automation that learns, adapts, and scales with your needs. So you can focus on what matters most.</p>
+          <form class="flex w-full max-w-[440px] bg-email-input-bg border border-email-input-border rounded-full overflow-hidden items-stretch">
+            <input type="email" placeholder="Enter your email" class="border-none bg-transparent px-6 py-3.5 text-[1.0625rem] text-[#1a2847] flex-1 outline-none placeholder:text-[#2a3a5e] placeholder:opacity-70" />
+            <button type="submit" class="bg-email-btn-bg text-white font-semibold rounded-full m-[5px] mr-[5px] flex items-center gap-1.5 px-5 py-3 text-[1.0625rem] hover:bg-opacity-90 transition-all">
+              Book a Demo
+              <svg class="w-4 h-4 ml-1.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+    OLD HERO -->
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-white h-screen flex items-center justify-center">
+      <!-- Canvas for animated background. Positioned absolutely to fill the section. -->
+      <canvas id="gradient-canvas" class="absolute inset-0 h-full w-full"></canvas>
+
+      <!-- Content container. Positioned relatively with a z-index to ensure it's on top of the canvas. -->
+      <div class="relative z-10">
+        <div class="mx-auto max-w-4xl px-6 text-center">
+          <!-- Status Label -->
+          <div class="mb-8 inline-flex items-center justify-center gap-x-2 rounded-full bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-700">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#4f46e5" class="bi bi-stars" viewBox="0 0 16 16" id="Stars--Streamline-Bootstrap" height="16" width="16">
+              <desc>Stars Streamline Icon: https://streamlinehq.com</desc>
+              <path
+                d="M7.657 6.247c0.11 -0.33 0.576 -0.33 0.686 0l0.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936 0.645c0.33 0.11 0.33 0.576 0 0.686l-1.937 0.645a2.89 2.89 0 0 0 -1.828 1.829l-0.645 1.936a0.361 0.361 0 0 1 -0.686 0l-0.645 -1.937a2.89 2.89 0 0 0 -1.828 -1.828l-1.937 -0.645a0.361 0.361 0 0 1 0 -0.686l1.937 -0.645a2.89 2.89 0 0 0 1.828 -1.828zM3.794 1.148a0.217 0.217 0 0 1 0.412 0l0.387 1.162c0.173 0.518 0.579 0.924 1.097 1.097l1.162 0.387a0.217 0.217 0 0 1 0 0.412l-1.162 0.387A1.73 1.73 0 0 0 4.593 5.69l-0.387 1.162a0.217 0.217 0 0 1 -0.412 0L3.407 5.69A1.73 1.73 0 0 0 2.31 4.593l-1.162 -0.387a0.217 0.217 0 0 1 0 -0.412l1.162 -0.387A1.73 1.73 0 0 0 3.407 2.31zM10.863 0.099a0.145 0.145 0 0 1 0.274 0l0.258 0.774c0.115 0.346 0.386 0.617 0.732 0.732l0.774 0.258a0.145 0.145 0 0 1 0 0.274l-0.774 0.258a1.16 1.16 0 0 0 -0.732 0.732l-0.258 0.774a0.145 0.145 0 0 1 -0.274 0l-0.258 -0.774a1.16 1.16 0 0 0 -0.732 -0.732L9.1 2.137a0.145 0.145 0 0 1 0 -0.274l0.774 -0.258c0.346 -0.115 0.617 -0.386 0.732 -0.732z"
+                stroke-width="1"
+              ></path>
+            </svg>
+            <span class="font-semibold">Launching 2026</span>
+          </div>
+
+          <!-- Headline -->
+          <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+            Automate the routine <br />
+            with <span class="text-indigo-600">AI agents</span>
+          </h1>
+
+          <!-- Subtitle -->
+          <p class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-gray-600">Transform your business operations with intelligent automation that learns, adapts, and scales with your needs. So you can focus on what matters most.</p>
+
+          <!-- Email Form with Glassmorphism Effect -->
+          <!-- class="min-w-0 flex-auto rounded-md border-0 bg-white/10 px-3.5 py-2 text-white backdrop-blur-sm ring-1 ring-inset ring-white/20 placeholder:text-white/70 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" -->
+          <form action="#" method="POST" class="mx-auto mt-10 max-w-md newsletter-form">
+            <div class="flex gap-x-4">
+              <label for="hero-email-address" class="sr-only">Email address</label>
+              <input
+                id="hero-email-address"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                class="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                placeholder="Enter your email"
+              />
+              <button type="submit" class="flex-none rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Notify me</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="bg-white py-16 sm:py-24" id="how-it-works">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="mx-auto max-w-2xl text-center">
+          <h2 class="text-base font-semibold leading-7 text-indigo-600">How it works</h2>
+          <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Get started in 3 simple steps</p>
+        </div>
+
+        <!-- 3-Step Grid -->
+        <div class="mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+          <!-- Step 1 Card: Write the Playbook -->
+          <div class="flex flex-col rounded-2xl border border-gray-200 p-6 shadow-sm">
+            <!-- Text Content -->
+            <div>
+              <h3 class="text-lg font-semibold leading-6 text-gray-900">1. Write the playbook</h3>
+              <p class="mt-2 text-base leading-7 text-gray-600">Give your AI agent instructions just like you would a new hire. Outline the process step-by-step in natural, conversational language.</p>
+            </div>
+            <!-- Visual: Instruction Input -->
+            <div class="mt-6 flex flex-1 items-center justify-center rounded-xl bg-violet-50/50 p-6">
+              <div class="w-full space-y-4">
+                <label for="instruction" class="block text-sm font-medium leading-6 text-gray-900">Instructions</label>
+                <div class="mt-2">
+                  <input
+                    type="text"
+                    name="instruction"
+                    id="instruction"
+                    class="block w-full rounded-md border-0 py-2.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    placeholder="What should I automate for you?"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2 Card: Hand Over the Keys -->
+          <div class="flex flex-col rounded-2xl border border-gray-200 p-6 shadow-sm">
+            <!-- Text Content -->
+            <div>
+              <h3 class="text-lg font-semibold leading-6 text-gray-900">2. Hand over the keys</h3>
+              <p class="mt-2 text-base leading-7 text-gray-600">Grant your agent access to the specific tools it needs to do its job. Your data is secure and can be managed at any time.</p>
+            </div>
+            <!-- Visual: Single Permission Box -->
+            <div class="mt-6 flex flex-1 items-center justify-center rounded-xl bg-violet-50/50 p-6">
+              <div class="w-full">
+                <!-- Item 1: Knowledge Database -->
+                <div class="flex items-center gap-x-3 rounded-lg bg-white p-4 shadow-sm ring-1 ring-inset ring-violet-200/50">
+                  <div class="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-md bg-indigo-600">
+                    <svg class="h-4 w-4 text-white" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                      <path d="M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z"></path>
+                    </svg>
+                  </div>
+                  <p class="text-base font-medium text-gray-900">Knowledge database</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3 Card: Put it on Autopilot -->
+          <div class="flex flex-col rounded-2xl border border-gray-200 p-6 shadow-sm">
+            <!-- Text Content -->
+            <div>
+              <h3 class="text-lg font-semibold leading-6 text-gray-900">3. Put it on autopilot</h3>
+              <p class="mt-2 text-base leading-7 text-gray-600">Sit back as your agent works 24/7 in the background, handling repetitive tasks so you can focus on what matters most.</p>
+            </div>
+            <!-- Visual: Agent Status with X-Circle Icon -->
+            <div class="mt-6 flex flex-1 items-center justify-center rounded-xl bg-violet-50/50 p-6">
+              <div class="w-full rounded-lg bg-white p-4 shadow-sm ring-1 ring-gray-900/5">
+                <div class="flex items-center justify-between">
+                  <!-- Left Side: Status -->
+                  <div class="flex items-center gap-x-3">
+                    <div class="flex-none rounded-full bg-green-100/60 p-1 text-green-600">
+                      <div class="h-2.5 w-2.5 rounded-full bg-current"></div>
+                    </div>
+                    <p class="text-base font-medium leading-6 text-gray-900">Agent active</p>
+                  </div>
+                  <!-- Right Side: X-Circle Icon -->
+                  <button type="button" class="rounded-full p-1 text-red-300 hover:text-red-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 transition-colors">
+                  <span class="sr-only">Remove item</span>
+                  <svg class="h-6 w-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="-0.75 -0.75 16 16">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m5.890625 5.890625 2.71875 2.71875m0 -2.71875 -2.71875 2.71875M12.6875 7.25a5.4375 5.4375 0 1 1 -10.875 0 5.4375 5.4375 0 0 1 10.875 0Z" stroke-width="1.5"></path>
+                  </svg>
+                </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Features Section with Bento Grid -->
+    <section class="bg-white py-16 sm:py-24" id="features">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <!-- Header -->
+        <div class="mx-auto max-w-2xl text-center">
+          <h2 class="text-base font-semibold leading-7 text-indigo-600">Features</h2>
+          <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">AI you can trust</p>
+        </div>
+
+        <!-- Bento Grid -->
+        <div class="mt-16 grid auto-rows-fr grid-cols-1 gap-8 lg:grid-cols-3 lg:grid-rows-2">
+          <!-- Feature 1: Human-in-the-Loop (Left column, spans 2 rows) -->
+          <div class="flex flex-col rounded-2xl border border-gray-200 p-6 shadow-sm lg:row-span-2">
+            <h3 class="text-lg font-semibold text-gray-900">Human-in-the-loop</h3>
+            <p class="mt-2 text-base text-gray-600">Manual override capabilities and customizable autonomy levels for complete control.</p>
+            <div class="mt-6 flex flex-1 items-center justify-center rounded-xl bg-gray-50 p-6">
+              <div class="w-full max-w-sm rounded-lg bg-white p-5 shadow-sm ring-1 ring-gray-900/5">
+                <h4 class="text-base font-semibold text-gray-900">Action required</h4>
+                <p class="mt-2 text-sm text-gray-600">The agent wants to send the Q3 report to 'all-staff@company.com'.</p>
+                <div class="mt-4 grid grid-cols-2 gap-3">
+                  <button type="button" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Approve</button>
+                  <button type="button" class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Deny</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature 2: Decision-Making (Middle column, top row) -->
+          <div class="flex flex-col rounded-2xl border border-gray-200 p-6 shadow-sm">
+            <h3 class="text-lg font-semibold text-gray-900">Decision-making</h3>
+            <p class="mt-2 text-base text-gray-600">Transparent reasoning previews show exactly how AI reaches its conclusions.</p>
+            <div class="mt-6 flex flex-1 items-center justify-center rounded-xl bg-blue-50 p-6">
+              <div class="w-full max-w-sm rounded-lg bg-white p-4 shadow-sm">
+                <p class="text-sm font-medium text-gray-700">Thought process</p>
+                <ul class="mt-3 space-y-2 text-sm text-gray-600">
+                  <li class="flex items-center gap-2">
+                    <svg class="h-4 w-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
+                    </svg>
+                    <span>Identified user intent.</span>
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <svg class="h-4 w-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
+                    <span>Searched knowledge base.</span>
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <svg class="h-4 w-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                    </svg>
+                    <span>Drafted a response.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature 3: Knowledge Database (Right column, spans 2 rows) -->
+          <div class="flex flex-col rounded-2xl border border-gray-200 p-6 shadow-sm lg:row-span-2">
+            <h3 class="text-lg font-semibold text-gray-900">Knowledge database</h3>
+            <p class="mt-2 text-base text-gray-600">Consistent, accurate answers powered by your organization's data.</p>
+            <div class="mt-6 flex flex-1 items-center justify-center rounded-xl bg-violet-50 p-6">
+              <div class="w-full max-w-sm space-y-4">
+                <!-- Search Bar -->
+                <!-- <div class="relative">
+                  <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" /></svg>
+                  </div>
+                  <input type="text" class="block w-full rounded-md border-0 bg-white py-2.5 pl-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm" placeholder="Ask about Q3 results..." />
+                </div> -->
+                <!-- Answer Card -->
+                <div class="rounded-lg bg-white p-4 shadow-sm ring-1 ring-gray-900/5">
+                  <div class="space-y-2">
+                    <div class="h-2.5 w-full rounded-full bg-gray-200"></div>
+                    <div class="h-2.5 w-5/6 rounded-full bg-gray-200"></div>
+                  </div>
+                  <div class="mt-4">
+                    <p class="text-xs font-semibold text-gray-500">Sources:</p>
+                    <div class="mt-2 flex flex-wrap gap-2">
+                      <span class="inline-flex items-center gap-1.5 rounded-full bg-violet-100 px-2 py-1 text-xs font-medium text-violet-700">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
+                          />
+                        </svg>
+                        Product Docs.pdf
+                      </span>
+                      <span class="inline-flex items-center gap-1.5 rounded-full bg-violet-100 px-2 py-1 text-xs font-medium text-violet-700">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
+                          />
+                        </svg>
+                        API_Guide.md
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature 4: Live Updates (Middle column, bottom row) -->
+          <div class="flex flex-col rounded-2xl border border-gray-200 p-6 shadow-sm">
+            <h3 class="text-lg font-semibold text-gray-900">Live updates</h3>
+            <p class="mt-2 text-base text-gray-600">Real-time logs and monitoring keep you informed of every action taken.</p>
+            <div class="mt-6 flex flex-1 items-center justify-center rounded-xl bg-green-50 p-6">
+              <div class="w-full max-w-sm rounded-lg bg-white p-4 shadow-sm">
+                <p class="text-sm font-medium text-gray-700">Activity log</p>
+                <ul class="mt-3 space-y-2 text-sm text-gray-600">
+                  <li class="flex items-start gap-2">
+                    <svg class="h-4 w-4 flex-shrink-0 text-green-500" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <div>Sent Q3 report to team. <span class="text-gray-400">just now</span></div>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <svg class="h-4 w-4 flex-shrink-0 text-green-500" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <div>Updated customer data. <span class="text-gray-400">2m ago</span></div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section id="use-cases" class="bg-white py-16 sm:py-24">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <!-- Header -->
+        <div class="mx-auto max-w-2xl text-center">
+          <h2 class="text-base font-semibold leading-7 text-indigo-600">Use cases</h2>
+          <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Automate your use case</p>
+        </div>
+
+        <!-- Tabs/Buttons -->
+        <div class="mt-16 flex flex-wrap justify-center gap-4" id="use-case-tabs">
+          <button class="use-case-tab-button rounded-lg bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" data-tab="email">Email Automation</button>
+          <button class="use-case-tab-button rounded-lg bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" data-tab="scheduling">Scheduling</button>
+          <button class="use-case-tab-button rounded-lg bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" data-tab="invoicing">Invoicing</button>
+          <button class="use-case-tab-button rounded-lg bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" data-tab="lead">Lead Nurturing</button>
+          <button class="use-case-tab-button rounded-lg bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" data-tab="support">Customer Support</button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="mt-12">
+          <!-- Email Tab -->
+          <div class="use-case-tab-content" id="email-tab">
+            <div class="grid grid-cols-1 gap-x-8 gap-y-8 lg:grid-cols-2 lg:items-center">
+              <!-- Text Content -->
+              <div>
+                <h3 class="text-2xl font-bold tracking-tight text-gray-900">Email Automation</h3>
+                <p class="mt-6 text-base leading-7 text-gray-600">Draft personalized outreach emails that resonate with your audience. Our AI understands context, tone, and timing to create compelling messages that drive engagement.</p>
+              </div>
+              <!-- Visual Mockup -->
+              <div class="flex flex-1 items-center justify-center rounded-xl bg-indigo-50/70 p-6">
+                <div class="w-full max-w-sm space-y-4">
+                  <!-- Email -->
+                  <div class="rounded-lg bg-white p-4 ring-1 ring-gray-900/5">
+                    <div class="flex items-center justify-between">
+                      <h4 class="text-sm font-semibold text-gray-900">Re: Inquiry</h4>
+                      <span class="inline-flex items-center gap-x-1.5 rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-700">
+                        <svg class="h-1.5 w-1.5 fill-green-500" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>
+                        Sent
+                      </span>
+                    </div>
+                    <div class="mt-3 border-t border-gray-200 pt-3">
+                      <div class="space-y-2">
+                        <div class="h-3 w-3/12 rounded-full bg-gray-200"></div>
+                        <div class="h-3 w-11/12 rounded-full bg-gray-200"></div>
+                        <div class="h-3 w-11/1 rounded-full bg-gray-200"></div>
+                        <div class="h-3 w-11/12 rounded-full bg-gray-200"></div>
+                        <div class="h-3 w-6/12 rounded-full bg-gray-200"></div>
+                      </div>
+                      <div class="mt-4 space-y-4">
+                        </div>
+                        <span class="inline-flex items-center gap-1.5 rounded-full bg-violet-100 px-2 py-1 text-xs font-medium text-violet-700">
+                          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
+                            />
+                          </svg>
+                          Pricing table.pdf
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--OLD EMAIL <div class="flex items-center justify-center rounded-xl bg-indigo-50 p-8">
+                <div class="w-full max-w-sm rounded-lg bg-white p-5 shadow-sm ring-1 ring-gray-900/5">
+                  <div class="flex items-center justify-between">
+                    <h4 class="text-base font-semibold text-gray-900">New Campaign</h4>
+                    <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                  </div>
+                  <p class="mt-1 text-sm text-gray-500">AI is drafting an email...</p>
+                  <div class="mt-4 space-y-3">
+                    <div class="grid grid-cols-4 items-center gap-2">
+                      <span class="text-sm font-medium text-gray-500">To:</span>
+                      <div class="col-span-3 h-8 rounded-md bg-gray-100 px-3 py-2 text-sm text-gray-800">New Leads</div>
+                    </div>
+                    <div class="grid grid-cols-4 items-center gap-2">
+                      <span class="text-sm font-medium text-gray-500">Subj:</span>
+                      <div class="col-span-3 h-8 rounded-md bg-gray-100 px-3 py-2 text-sm text-gray-800">Welcome to Acme!</div>
+                    </div>
+                    <div class="mt-2 h-20 rounded-md bg-gray-100 p-2">
+                      <div class="h-2 w-11/12 rounded-full bg-gray-200"></div>
+                      <div class="mt-2 h-2 w-full rounded-full bg-gray-200"></div>
+                      <div class="mt-2 h-2 w-3/4 rounded-full bg-gray-200"></div>
+                    </div>
+                    <button type="button" class="w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">Send</button>
+                  </div>
+                </div>
+              </div> OLD EMAIL-->
+            </div>
+          </div>
+
+          <!-- Other tabs (hidden by default) -->
+          <div class="use-case-tab-content hidden" id="scheduling-tab">
+            <div class="grid grid-cols-1 gap-x-8 gap-y-8 lg:grid-cols-2 lg:items-center">
+              <div>
+                <h3 class="text-2xl font-bold tracking-tight text-gray-900">Smart Scheduling</h3>
+                <p class="mt-6 text-base leading-7 text-gray-600">Let AI handle your appointment bookings seamlessly. It intelligently finds open slots, manages time zones, and sends reminders, so you never miss a meeting.</p>
+              </div>
+              <!-- REMOVED: lg:aspect-square lg:h-full. INCREASED: p-8 for better spacing. -->
+              <div class="flex items-center justify-center rounded-xl bg-sky-50 p-8">
+                <div class="w-full max-w-xs rounded-lg bg-white p-4 shadow-sm ring-1 ring-gray-900/5">
+                  <p class="text-sm font-medium text-gray-900">Available Slots</p>
+                  <p class="text-xs text-gray-500">AI found 3 openings this week:</p>
+                  <div class="mt-4 space-y-3">
+                    <div class="rounded-md border border-gray-200 p-3 text-center text-sm font-medium text-gray-700">Wed, 10:00 AM</div>
+                    <div class="rounded-md border-2 border-indigo-500 bg-indigo-50 p-3 text-center text-sm font-semibold text-indigo-700">Wed, 2:30 PM</div>
+                    <div class="rounded-md border border-gray-200 p-3 text-center text-sm font-medium text-gray-700">Fri, 11:00 AM</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="use-case-tab-content hidden" id="invoicing-tab">
+            <div class="grid grid-cols-1 gap-x-8 gap-y-8 lg:grid-cols-2 lg:items-center">
+              <div>
+                <h3 class="text-2xl font-bold tracking-tight text-gray-900">Automated Invoicing</h3>
+                <p class="mt-6 text-base leading-7 text-gray-600">Auto-generate and send invoices, then reconcile payments automatically. Keep your cash flow healthy with intelligent financial automation that reduces errors and saves time.</p>
+              </div>
+              <!-- REMOVED: lg:aspect-square lg:h-full. INCREASED: p-8 for better spacing. -->
+              <div class="flex items-center justify-center rounded-xl bg-green-50 p-8">
+                <div class="w-full max-w-sm rounded-lg bg-white p-4 shadow-sm ring-1 ring-gray-900/5">
+                  <p class="font-bold text-gray-900">Invoice #2024-081</p>
+                  <p class="text-sm text-gray-500">To: Client Corp</p>
+                  <div class="mt-4 space-y-2 border-t border-b border-gray-200 py-3">
+                    <div class="flex justify-between text-sm"><span class="text-gray-600">Project X - Design</span><span class="font-medium text-gray-800">$2,500.00</span></div>
+                    <div class="flex justify-between text-sm"><span class="text-gray-600">Project X - Dev</span><span class="font-medium text-gray-800">$4,000.00</span></div>
+                  </div>
+                  <div class="mt-3 flex justify-between font-bold"><span class="text-gray-900">Total</span><span class="text-gray-900">$6,500.00</span></div>
+                  <div class="mt-4 flex items-center gap-2 rounded-md bg-green-100 p-2">
+                    <svg class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <p class="text-sm font-medium text-green-800">Status: Paid</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="use-case-tab-content hidden" id="lead-tab">
+            <div class="grid grid-cols-1 gap-x-8 gap-y-8 lg:grid-cols-2 lg:items-center">
+              <div>
+                <h3 class="text-2xl font-bold tracking-tight text-gray-900">Lead Nurturing</h3>
+                <p class="mt-6 text-base leading-7 text-gray-600">Deliver targeted follow-ups based on real-time engagement patterns. Convert more leads with personalized nurturing campaigns that adapt to user behavior automatically.</p>
+              </div>
+              <!-- REMOVED: lg:aspect-square lg:h-full. INCREASED: p-8 for better spacing. -->
+              <div class="flex items-center justify-center rounded-xl bg-amber-50 p-8">
+                <div class="w-full max-w-sm rounded-lg bg-white p-4 shadow-sm ring-1 ring-gray-900/5">
+                  <p class="text-sm font-medium text-gray-700">Lead Nurturing Flow</p>
+                  <ul class="mt-3 space-y-4">
+                    <li class="relative flex items-center gap-3">
+                      <div class="absolute -bottom-4 left-3.5 h-4 w-px bg-gray-200"></div>
+                      <div class="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-amber-500">
+                        <svg class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                        </svg>
+                      </div>
+                      <p class="text-sm text-gray-600">New Lead: 'jane@example.com'</p>
+                    </li>
+                    <li class="relative flex items-center gap-3">
+                      <div class="absolute -bottom-4 left-3.5 h-4 w-px bg-gray-200"></div>
+                      <div class="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-gray-300">
+                        <svg class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                          />
+                        </svg>
+                      </div>
+                      <p class="text-sm text-gray-600">Sent Welcome Email</p>
+                    </li>
+                    <li class="flex items-center gap-3">
+                      <div class="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-gray-300">
+                        <svg class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                      </div>
+                      <p class="text-sm text-gray-600">Wait 2 days...</p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="use-case-tab-content hidden" id="support-tab">
+            <div class="grid grid-cols-1 gap-x-8 gap-y-8 lg:grid-cols-2 lg:items-center">
+              <div>
+                <h3 class="text-2xl font-bold tracking-tight text-gray-900">24/7 Customer Support</h3>
+                <p class="mt-6 text-base leading-7 text-gray-600">Deploy AI-powered bots that provide instant, accurate answers to common questions. Reduce support tickets and improve customer satisfaction with around-the-clock service.</p>
+              </div>
+              <!-- REMOVED: lg:aspect-square lg:h-full. INCREASED: p-8 for better spacing. -->
+              <div class="flex items-center justify-center rounded-xl bg-violet-50 p-8">
+                <div class="w-full max-w-sm space-y-3">
+                  <!-- Customer Chat Bubble -->
+                  <div class="flex items-end gap-2">
+                    <div class="h-8 w-8 rounded-full bg-gray-300"></div>
+                    <div class="rounded-lg rounded-bl-none bg-gray-200 p-3 text-sm text-gray-800">Where is my order #XYZ?</div>
+                  </div>
+                  <!-- AI Chat Bubble -->
+                  <div class="flex items-end justify-end gap-2">
+                    <div class="max-w-[80%] rounded-lg rounded-br-none bg-indigo-600 p-3 text-sm text-white">Your order #XYZ was shipped this morning at 8:15 AM. The tracking number is 1Z9999W99999999999.</div>
+                    <div class="h-8 w-8 rounded-full bg-indigo-600"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section with Email Signup (Two-Column) -->
+    <section class="bg-white py-16 sm:py-24" id="cta">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <!-- Grid container for the two-column layout -->
+        <div class="grid grid-cols-1 items-center gap-x-12 gap-y-10 lg:grid-cols-2">
+          <!-- Left Column: Text Content -->
+          <div>
+            <div class="flex items-center gap-x-3">
+              <svg class="h-8 w-8 text-indigo-600" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M7.657 6.247c0.11 -0.33 0.576 -0.33 0.686 0l0.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936 0.645c0.33 0.11 0.33 0.576 0 0.686l-1.937 0.645a2.89 2.89 0 0 0 -1.828 1.829l-0.645 1.936a0.361 0.361 0 0 1 -0.686 0l-0.645 -1.937a2.89 2.89 0 0 0 -1.828 -1.828l-1.937 -0.645a0.361 0.361 0 0 1 0 -0.686l1.937 -0.645a2.89 2.89 0 0 0 1.828 -1.828zM3.794 1.148a0.217 0.217 0 0 1 0.412 0l0.387 1.162c0.173 0.518 0.579 0.924 1.097 1.097l1.162 0.387a0.217 0.217 0 0 1 0 0.412l-1.162 0.387A1.73 1.73 0 0 0 4.593 5.69l-0.387 1.162a0.217 0.217 0 0 1 -0.412 0L3.407 5.69A1.73 1.73 0 0 0 2.31 4.593l-1.162 -0.387a0.217 0.217 0 0 1 0 -0.412l1.162 -0.387A1.73 1.73 0 0 0 3.407 2.31zM10.863 0.099a0.145 0.145 0 0 1 0.274 0l0.258 0.774c0.115 0.346 0.386 0.617 0.732 0.732l0.774 0.258a0.145 0.145 0 0 1 0 0.274l-0.774 0.258a1.16 1.16 0 0 0 -0.732 0.732l-0.258 0.774a0.145 0.145 0 0 1 -0.274 0l-0.258 -0.774a1.16 1.16 0 0 0 -0.732 -0.732L9.1 2.137a0.145 0.145 0 0 1 0 -0.274l0.774 -0.258c0.346 -0.115 0.617 -0.386 0.732 -0.732z"
+                ></path>
+              </svg>
+              <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Launching soon</h2>
+            </div>
+            <p class="mt-4 text-lg leading-8 text-gray-600">Be the first to know when we go live. Sign up for exclusive updates and an early access invitation.</p>
+          </div>
+
+          <!-- Right Column: Email Form -->
+          <div>
+            <form action="#" method="POST" class="newsletter-form">
+              <div class="flex gap-x-4">
+                <label for="email-address" class="sr-only">Email address</label>
+                <input
+                  id="email-address"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                  class="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                  placeholder="Enter your email"
+                />
+                <button type="submit" class="flex-none rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Notify me</button>
+              </div>
+              <p class="mt-4 text-sm leading-6 text-gray-500">We care about your data. Read our <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">privacy&nbsp;policy</a>.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900">
+      <div class="mx-auto max-w-7xl overflow-hidden px-6 py-12 sm:py-16 lg:px-8">
+        <!-- Navigation Links -->
+        <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
+          <div class="pb-6">
+            <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Privacy</a>
+          </div>
+          <div class="pb-6">
+            <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Terms</a>
+          </div>
+          <div class="pb-6">
+            <a href="#" class="text-sm leading-6 text-gray-300 hover:text-white">Contact</a>
+          </div>
+        </nav>
+        <!-- Copyright Notice -->
+        <p class="mt-12 text-center text-xs leading-5 text-gray-500">&copy; 2025 automaitly. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Gradient Animation Script -->
+    <script>
+      // Canvas gradient animation
+      const canvas = document.getElementById("gradient-canvas");
+      const ctx = canvas.getContext("2d");
+      let time = 0;
+
+      // Gradient colors from your AI-native theme
+      const colors = [
+        { r: 162, g: 89, b: 198, a: 0.45 }, // #a259c6 with opacity
+        { r: 91, g: 109, b: 248, a: 0.5 }, // #5b6df8 with opacity
+        { r: 255, g: 255, b: 255, a: 1 }, // white
+        { r: 232, g: 225, b: 239, a: 0.7 }, // light purple
+      ];
+
+      function resizeCanvas() {
+        const container = canvas.parentElement;
+        canvas.width = container.offsetWidth;
+        canvas.height = container.offsetHeight;
+      }
+
+      function createGradient(x, y, radius, colorIndex) {
+        const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+        const color = colors[colorIndex % colors.length];
+        gradient.addColorStop(0, `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`);
+        gradient.addColorStop(1, `rgba(${color.r}, ${color.g}, ${color.b}, 0)`);
+        return gradient;
+      }
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Create flowing gradient blobs
+        // REDUCED SPEED: Changed multipliers from 0.0005-0.0008 to 0.0001-0.0002
+        const blobs = [
+          {
+            x: canvas.width * (0.8 + 0.2 * Math.sin(time * 0.0001)),
+            y: canvas.height * (0.2 + 0.1 * Math.cos(time * 0.00015)),
+            radius: canvas.width * 0.4,
+            colorIndex: 0,
+          },
+          {
+            x: canvas.width * (0.2 + 0.15 * Math.cos(time * 0.00012)),
+            y: canvas.height * (0.8 + 0.15 * Math.sin(time * 0.00018)),
+            radius: canvas.width * 0.35,
+            colorIndex: 1,
+          },
+          {
+            x: canvas.width * (0.5 + 0.3 * Math.sin(time * 0.00008)),
+            y: canvas.height * (0.5 + 0.2 * Math.cos(time * 0.0001)),
+            radius: canvas.width * 0.5,
+            colorIndex: 2,
+          },
+          {
+            x: canvas.width * (0.7 + 0.2 * Math.cos(time * 0.00014)),
+            y: canvas.height * (0.3 + 0.2 * Math.sin(time * 0.00011)),
+            radius: canvas.width * 0.3,
+            colorIndex: 3,
+          },
+        ];
+
+        // Draw each blob
+        blobs.forEach((blob) => {
+          ctx.fillStyle = createGradient(blob.x, blob.y, blob.radius, blob.colorIndex);
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        });
+
+        time += 16; // Approximate 60fps
+        requestAnimationFrame(animate);
+      }
+
+      // Initialize
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+      animate();
+
+      //       // Canvas gradient animation
+      //       const canvas = document.getElementById("gradient-canvas");
+      // const ctx = canvas.getContext("2d");
+      // let time = 0;
+
+      // // Gradient colors from your AI-native theme
+      // const colors = [
+      //   { r: 162, g: 89, b: 198, a: 0.45 }, // #a259c6 with opacity
+      //   { r: 91, g: 109, b: 248, a: 0.5 },  // #5b6df8 with opacity
+      //   { r: 255, g: 255, b: 255, a: 1 },    // white (No longer used but kept for reference)
+      //   { r: 232, g: 225, b: 239, a: 0.7 },  // light purple
+      // ];
+
+      // function resizeCanvas() {
+      //   const container = canvas.parentElement;
+      //   canvas.width = container.offsetWidth;
+      //   canvas.height = container.offsetHeight;
+      // }
+
+      // function createGradient(x, y, radius, colorIndex) {
+      //   const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+      //   const color = colors[colorIndex % colors.length];
+      //   gradient.addColorStop(0, `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`);
+      //   gradient.addColorStop(1, `rgba(${color.r}, ${color.g}, ${color.b}, 0)`);
+      //   return gradient;
+      // }
+
+      // function animate() {
+      //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      //   const vertical_anchor = 0.75;
+
+      //   // Create blobs with motion anchored to the bottom-center of the canvas
+      //   const blobs = [
+      //     {
+      //       // Purple blob
+      //       x: canvas.width * (0.5 + 0.25 * Math.sin(time * 0.0001)),
+      //       y: canvas.height * (vertical_anchor + 0.2 * Math.cos(time * 0.00015)),
+      //       radius: canvas.width * 0.3,
+      //       colorIndex: 0,
+      //     },
+      //     {
+      //       // Blue blob
+      //       x: canvas.width * (0.5 + 0.15 * Math.cos(time * 0.00012)),
+      //       y: canvas.height * (vertical_anchor + 0.25 * Math.sin(time * 0.00018)),
+      //       radius: canvas.width * 0.35,
+      //       colorIndex: 1,
+      //     },
+      //     // --- REMOVED ---
+      //     // The white blob object that was here has been deleted.
+      //     //
+      //     {
+      //       // Light purple blob
+      //       x: canvas.width * (0.5 + 0.2 * Math.cos(time * 0.0002)),
+      //       y: canvas.height * (vertical_anchor + 0.2 * Math.sin(time * 0.00015)),
+      //       radius: canvas.width * 0.25,
+      //       colorIndex: 3,
+      //     },
+      //   ];
+
+      //   // Draw each blob
+      //   blobs.forEach((blob) => {
+      //     ctx.fillStyle = createGradient(blob.x, blob.y, blob.radius, blob.colorIndex);
+      //     ctx.fillRect(0, 0, canvas.width, canvas.height);
+      //   });
+
+      //   time += 16; // Approximate 60fps
+      //   requestAnimationFrame(animate);
+      // }
+
+      // // Initialize
+      // window.addEventListener("resize", resizeCanvas);
+      // resizeCanvas();
+      // animate();
+
+      // Tab functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        const tabsContainer = document.getElementById("use-case-tabs");
+        const tabButtons = tabsContainer.querySelectorAll(".use-case-tab-button");
+        const tabContents = document.querySelectorAll(".use-case-tab-content");
+
+        // Define the class lists for both states, including hover styles
+        const activeClasses = ["bg-indigo-600", "text-white", "shadow-sm", "hover:bg-indigo-500"];
+        const inactiveClasses = ["bg-white", "text-gray-900", "shadow-sm", "ring-1", "ring-inset", "ring-gray-300", "hover:bg-gray-50"];
+
+        function activateTab(buttonToActivate) {
+          const tabId = buttonToActivate.getAttribute("data-tab");
+
+          // Update all buttons
+          tabButtons.forEach((button) => {
+            // Reset every button to the inactive state first
+            button.classList.remove(...activeClasses);
+            button.classList.add(...inactiveClasses);
+          });
+
+          // Apply active state to the target button
+          buttonToActivate.classList.add(...activeClasses);
+          buttonToActivate.classList.remove(...inactiveClasses);
+
+          // Show/hide content panels
+          tabContents.forEach((content) => {
+            if (content.id === `${tabId}-tab`) {
+              content.classList.remove("hidden");
+            } else {
+              content.classList.add("hidden");
+            }
+          });
+        }
+
+        // Listener for clicks
+        tabsContainer.addEventListener("click", (event) => {
+          const clickedButton = event.target.closest(".use-case-tab-button");
+          if (clickedButton) {
+            activateTab(clickedButton);
+          }
+        });
+
+        // Set the initial active state for the first button on page load
+        if (tabButtons.length > 0) {
+          activateTab(tabButtons[0]);
+        }
+      });
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Form submission handler
+      const newsletterForms = document.querySelectorAll(".newsletter-form");
+      newsletterForms.forEach(form => {
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const email = form.querySelector('input[type="email"]').value;
+
+          console.log("Demo requested for:", email);
+
+          const button = form.querySelector("button");
+          const originalText = button.innerHTML;
+          
+          button.innerHTML = 'Thank you!';
+          button.classList.add("bg-green-500");
+          button.classList.remove("bg-indigo-600");
+
+          setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove("bg-green-500");
+            button.classList.add("bg-indigo-600");
+            form.reset();
+          }, 3000);
+        });
+      });
+
+      // Stop gradient animation on hover
+      const gradientText = document.querySelector(".gradient-text");
+      if (gradientText) {
+        gradientText.addEventListener("mouseenter", () => {
+          gradientText.style.animationPlayState = "paused";
+        });
+        gradientText.addEventListener("mouseleave", () => {
+          gradientText.style.animationPlayState = "running";
+        });
+      }
+    </script>
+    <!-- Additional responsive styles -->
+    <style>
+      /* Mobile Responsive Styles */
+      @media (max-width: 1024px) {
+        .hero-bg {
+          min-height: 65vh;
+        }
+
+        .tab-content {
+          flex-direction: column !important;
+        }
+
+        .tab-content > div:last-child {
+          width: 100% !important;
+          max-width: none !important;
+        }
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.5rem !important;
+        }
+
+        h2 {
+          font-size: 2rem !important;
+        }
+
+        .hero-bg {
+          padding: 40px 20px !important;
+          border-radius: 14px !important;
+        }
+
+        .email-signup-form {
+          flex-direction: column;
+        }
+
+        .footer-wrapper {
+          flex-direction: column !important;
+          text-align: center;
+        }
+
+        .footer-wrapper nav ul {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 1.75rem !important;
+        }
+
+        .hero-subtitle {
+          font-size: 1rem !important;
+        }
+
+        .tab-button {
+          font-size: 0.9375rem !important;
+          padding: 10px 18px !important;
+        }
+      }
+    </style>
+  </body>
+</html>
